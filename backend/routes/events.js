@@ -1,56 +1,90 @@
 const express = require('express');
-const Event = require('../models/event');
-const authenticate = require('../middleware/authenticate');
+const auth = require('../middleware/auth');
 
-const router = express.Router();
 
-// Get all events
-router.get('/', authenticate, async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
-        const events = await Event.find({ userId: req.user.id });
-        res.status(200).json(events);
+        const { title, description, date, location } = req.body;
+        const event = new Event({ title, description, date, location, user: req.userId });
+        await event.save();
+        res.status(201).json(event);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).send('Server error');
     }
 });
 
-// Create an event
-router.post('/', authenticate, async (req, res) => {
-    const { name, date, time, location, description } = req.body;
+router.get('/', auth, async (req, res) => {
     try {
-        const newEvent = new Event({ name, date, time, location, description, userId: req.user.id });
-        await newEvent.save();
-        res.status(201).json(newEvent);
+        const events = await Event.find({ user: req.userId });
+        res.json(events);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).send('Server error');
     }
 });
 
-// Update an event
-router.put('/:id', authenticate, async (req, res) => {
-    const { id } = req.params;
-    const { name, date, time, location, description } = req.body;
+router.put('/:id', auth, async (req, res) => {
     try {
-        const updatedEvent = await Event.findByIdAndUpdate(
-            id,
-            { name, date, time, location, description },
+        const { title, description, date, location } = req.body;
+        const event = await Event.findOneAndUpdate(
+            { _id: req.params.id, user: req.userId },
+            { title, description, date, location },
             { new: true }
         );
-        res.status(200).json(updatedEvent);
+        if (!event) {
+            return res.status(404).json({ msg: 'Event not found' });
+        }
+        res.json(event);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).send('Server error');
     }
 });
 
-// Delete an event
-router.delete('/:id', authenticate, async (req, res) => {
-    const { id } = req.params;
+router.delete('/:id', auth, async (req, res) => {
     try {
-        await Event.findByIdAndDelete(id);
-        res.status(200).json({ message: 'Event deleted successfully' });
+        const event = await Event.findOneAndDelete({ _id: req.params.id, user: req.userId });
+        if (!event) {
+            return res.status(404).json({ msg: 'Event not found' });
+        }
+        res.json({ msg: 'Event removed' });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).send('Server error');
     }
 });
+
+router.get('/', auth, async (req, res) => {
+    try {
+        const { date, location } = req.query;
+        const filter = { user: req.userId };
+        if (date) {
+            filter.date = new Date(date);
+        }
+        if (location) {
+            filter.location = location;
+        }
+        const events = await Event.find(filter);
+        res.json(events);
+    } catch (err) {
+        res.status(500).send('Server error');
+    }
+});
+
+const express = require('express');
+const auth = require('../middleware/auth');
+const Event = require('../models/Event');
+const router = express.Router();
+
+// Todas las rutas de eventos están protegidas
+router.use(auth);
+
+router.get('/', async (req, res) => {
+    try {
+        const events = await Event.find({ user: req.userId });
+        res.json(events);
+    } catch (err) {
+        res.status(500).send('Server error');
+    }
+});
+
+// Otras rutas (POST, PUT, DELETE)...
 
 module.exports = router;
