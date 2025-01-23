@@ -12,15 +12,15 @@ const Login = () => {
         e.preventDefault();
         try {
             const res = await api.post('/auth/login', { email, password });
-            setAuthToken(res.data.token); // Configura el token en Axios
-            localStorage.setItem('token', res.data.token); // Guarda el token en localStorage
+            setAuthToken(res.data.token);
+            localStorage.setItem('token', res.data.token);
             Swal.fire({
                 icon: 'success',
                 title: 'Login successful!',
                 showConfirmButton: false,
                 timer: 1500,
             });
-            navigate('/events');
+            navigate('/events'); // Redirige al usuario a la página de eventos
         } catch (err) {
             Swal.fire({
                 icon: 'error',

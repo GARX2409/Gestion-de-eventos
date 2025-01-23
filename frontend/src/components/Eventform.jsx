@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Swal from 'sweetalert2';
 import api from '../api';
+import Swal from 'sweetalert2';
 
 const EventForm = ({ onEventCreated }) => {
     const [title, setTitle] = useState('');
@@ -33,7 +33,7 @@ const EventForm = ({ onEventCreated }) => {
     };
 
     return (
-        <div>
+        <div className="container">
             <h2>Create Event</h2>
             <form onSubmit={handleSubmit}>
                 <div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import EventList from '../components/EventList';
-import EventForm from '../components/Eventform';
+import EventForm from '../components/EventForm';
 
 const Events = () => {
     const [events, setEvents] = useState([]);
@@ -10,7 +10,7 @@ const Events = () => {
     };
 
     return (
-        <div>
+        <div className="container">
             <h1>Event Manager</h1>
             <EventForm onEventCreated={handleEventCreated} />
             <EventList events={events} />
