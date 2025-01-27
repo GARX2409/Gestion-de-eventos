@@ -14,7 +14,7 @@ const Register = () => {
             await api.post('/auth/register', { email, password });
             Swal.fire({
                 icon: 'success',
-                title: 'Registration successful!',
+                title: 'Registro exitoso!',
                 showConfirmButton: false,
                 timer: 1500,
             });
@@ -23,24 +23,24 @@ const Register = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Registration failed!',
+                text: 'Registro fallido!',
             });
         }
     };
 
     return (
         <div className="container">
-            <h2>Register</h2>
+            <h2>Registro</h2>
             <form onSubmit={handleRegister}>
                 <div>
                     <label>Email:</label>
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 <div>
-                    <label>Password:</label>
+                    <label>Contraseña:</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
-                <button type="submit">Register</button>
+                <button type="submit">Registrarse</button>
             </form>
         </div>
     );

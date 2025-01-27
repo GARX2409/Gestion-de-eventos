@@ -15,7 +15,7 @@ const EventForm = ({ onEventCreated }) => {
             onEventCreated(res.data);
             Swal.fire({
                 icon: 'success',
-                title: 'Event created!',
+                title: 'Evento creado!',
                 showConfirmButton: false,
                 timer: 1500,
             });
@@ -27,32 +27,32 @@ const EventForm = ({ onEventCreated }) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Failed to create event!',
+                text: 'No se pudo crear el evento!',
             });
         }
     };
 
     return (
         <div className="container">
-            <h2>Create Event</h2>
+            <h2>Crear evento</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Title:</label>
+                    <label>Titulo:</label>
                     <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
                 </div>
                 <div>
-                    <label>Description:</label>
+                    <label>Descripcion:</label>
                     <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} required />
                 </div>
                 <div>
-                    <label>Date:</label>
+                    <label>Fecha:</label>
                     <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
                 </div>
                 <div>
-                    <label>Location:</label>
+                    <label>Ubicacion:</label>
                     <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} required />
                 </div>
-                <button type="submit">Create Event</button>
+                <button type="submit">Crear evento</button>
             </form>
         </div>
     );

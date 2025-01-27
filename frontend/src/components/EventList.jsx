@@ -23,7 +23,7 @@ const EventList = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Failed to fetch events!',
+                text: 'No se pudieron recuperar los eventos!',
             });
         } finally {
             setLoading(false);
@@ -32,13 +32,13 @@ const EventList = () => {
 
     const handleDelete = async (id) => {
         const result = await Swal.fire({
-            title: 'Are you sure?',
-            text: 'You will not be able to recover this event!',
+            title: 'Estas seguro?',
+            text: 'No podrás recuperar este evento.!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
+            confirmButtonText: 'Si, borralo!',
         });
 
         if (result.isConfirmed) {
@@ -47,7 +47,7 @@ const EventList = () => {
                 setEvents(events.filter((event) => event._id !== id));
                 Swal.fire({
                     icon: 'success',
-                    title: 'Event deleted!',
+                    title: 'Evento eliminado!',
                     showConfirmButton: false,
                     timer: 1500,
                 });
@@ -56,7 +56,7 @@ const EventList = () => {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Failed to delete event!',
+                    text: 'No se pudo eliminar el evento!',
                 });
             }
         }
@@ -73,7 +73,7 @@ const EventList = () => {
             setEditingEvent(null); // Cierra el modal de edición
             Swal.fire({
                 icon: 'success',
-                title: 'Event updated!',
+                title: 'Evento actualizado!',
                 showConfirmButton: false,
                 timer: 1500,
             });
@@ -82,13 +82,13 @@ const EventList = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Failed to update event!',
+                text: 'No se pudo actualizar el evento!',
             });
         }
     };
 
     if (loading) {
-        return <div>Loading events...</div>;
+        return <div>Cargando eventos ...</div>;
     }
 
     if (error) {
@@ -97,7 +97,7 @@ const EventList = () => {
 
     return (
         <div className="container">
-            <h2>Events</h2>
+            <h2>Eventos</h2>
             <ul>
                 {events.map((event) => (
                     <li key={event._id}>
@@ -105,8 +105,8 @@ const EventList = () => {
                         <p>{event.description}</p>
                         <p>{new Date(event.date).toLocaleDateString()}</p>
                         <p>{event.location}</p>
-                        <button onClick={() => handleEdit(event)}>Edit</button>
-                        <button onClick={() => handleDelete(event._id)}>Delete</button>
+                        <button onClick={() => handleEdit(event)}>Editar</button>
+                        <button onClick={() => handleDelete(event._id)}>Eliminar</button>
                     </li>
                 ))}
             </ul>
@@ -115,7 +115,7 @@ const EventList = () => {
             {editingEvent && (
                 <div className="modal">
                     <div className="modal-content">
-                        <h2>Edit Event</h2>
+                        <h2>Editar evento</h2>
                         <form
                             onSubmit={(e) => {
                                 e.preventDefault();
@@ -123,7 +123,7 @@ const EventList = () => {
                             }}
                         >
                             <div>
-                                <label>Title:</label>
+                                <label>Titulo:</label>
                                 <input
                                     type="text"
                                     value={editingEvent.title}
@@ -134,7 +134,7 @@ const EventList = () => {
                                 />
                             </div>
                             <div>
-                                <label>Description:</label>
+                                <label>Descripcion:</label>
                                 <input
                                     type="text"
                                     value={editingEvent.description}
@@ -145,7 +145,7 @@ const EventList = () => {
                                 />
                             </div>
                             <div>
-                                <label>Date:</label>
+                                <label>Fecha:</label>
                                 <input
                                     type="date"
                                     value={new Date(editingEvent.date).toISOString().split('T')[0]}
@@ -156,7 +156,7 @@ const EventList = () => {
                                 />
                             </div>
                             <div>
-                                <label>Location:</label>
+                                <label>Ubicacion:</label>
                                 <input
                                     type="text"
                                     value={editingEvent.location}
@@ -166,9 +166,9 @@ const EventList = () => {
                                     required
                                 />
                             </div>
-                            <button type="submit">Save Changes</button>
+                            <button type="submit">Guardar cambios</button>
                             <button type="button" onClick={() => setEditingEvent(null)}>
-                                Cancel
+                                Cancelar
                             </button>
                         </form>
                     </div>

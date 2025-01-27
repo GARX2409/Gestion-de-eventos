@@ -16,7 +16,7 @@ const Login = () => {
             localStorage.setItem('token', res.data.token);
             Swal.fire({
                 icon: 'success',
-                title: 'Login successful!',
+                title: 'inicio de sesión exitoso!',
                 showConfirmButton: false,
                 timer: 1500,
             });
@@ -25,24 +25,24 @@ const Login = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Invalid credentials!',
+                text: 'Credenciales no válidas!',
             });
         }
     };
 
     return (
         <div className="container">
-            <h2>Login</h2>
+            <h2>Inicio de sesión</h2>
             <form onSubmit={handleLogin}>
                 <div>
                     <label>Email:</label>
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 <div>
-                    <label>Password:</label>
+                    <label>Contraseña:</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit">Ingresar</button>
             </form>
         </div>
     );
