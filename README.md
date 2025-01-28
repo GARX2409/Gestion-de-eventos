@@ -117,6 +117,6 @@ Nombre: Breyner Garay
 
 Email: breynergarayleudo@gmail.com
 
-GitHub: Garxs
+GitHub: GARX2409
 
 ¡Gracias por usar Event Manager! 😊
